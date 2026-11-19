@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIXEL HOUSE - Tableau de bord</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6fa;
+    color: #17243d;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #101d35;
+    color: white;
+    padding: 25px 18px;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.menu a {
+    display: block;
+    color: #d5dceb;
+    text-decoration: none;
+    padding: 14px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.menu a.active,
+.menu a:hover {
+    background: #263c62;
+    color: white;
+}
+
+.main {
+    flex: 1;
+    padding: 30px;
+    min-width: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 25px;
+}
+
+.header p {
+    color: #7a8497;
+    margin-top: 7px;
+}
+
+.btn {
+    background: #173d7a;
+    color: white;
+    border: none;
+    padding: 13px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #17243d0a;
+}
+
+.card p {
+    color: #7a8497;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    font-size: 25px;
+}
+
+.content {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.content h2 {
+    margin-bottom: 20px;
+    font-size: 19px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+th, td {
+    padding: 15px 10px;
+    text-align: left;
+    border-bottom: 1px solid #edf0f5;
+}
+
+th {
+    color: #7a8497;
+    font-size: 13px;
+}
+
+.status {
+    background: #e1f6e9;
+    color: #168344;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 20px 15px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+
+    max-height: none;
+    margin: auto 0;
+    flex-shrink: 0;
+}
+
+.modal-box h2 {
+    margin-bottom: 20px;
+}
+
+.modal-box input,
+.modal-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+@media(max-width: 750px) {
+    .container {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .logo {
+        margin-bottom: 12px;
+    }
+
+    .menu {
+        display: flex;
+        overflow-x: auto;
+        gap: 5px;
+    }
+
+    .menu a {
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .main {
+        padding: 18px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="logo">PIXEL HOUSE.</div>
+
+        <nav class="menu">
+            <a href="#" class="active">Tableau de bord</a>
+            <a href="#ventes">Ventes</a>
+            <a href="#">Produits</a>
+            <a href="#">Clients</a>
+            <a href="#">Paiements</a>
+            <a href="#">Paramètres</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+            <div>
+                <h1>Bonjour, bienvenue ! </h1>
+                <p>Voici le résumé de votre commerce.</p>
+            </div>
+
+            <button class="btn" onclick="ouvrirModal()">
+                + Nouvelle vente
+            </button>
+        </header>
+
+        <section class="stats">
+
+            <div class="card">
+                <p>Chiffre d'affaires</p>
+                <h2 id="ca">85 000 FCFA</h2>
+            </div>
+
+            <div class="card">
+                <p>Nombre de ventes</p>
+                <h2 id="nombre">12</h2>
+            </div>
+
+            <div class="card">
+                <p>Bénéfice estimé</p>
+                <h2 id="benefice">25 000 FCFA</h2>
+            </div>
+
+        </section>
+
+        <section class="content" id="ventes">
+            <h2>Dernières ventes</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Client</th>
+                        <th>Montant</th>
+                        <th>Paiement</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listeVentes">
+                    <tr>
+                        <td>Robe africaine</td>
+                        <td>Aminata</td>
+                        <td>15 000 FCFA</td>
+                        <td><span class="status">Payé</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sac à main</td>
+                        <td>Mariam</td>
+                        <td>20 000 FCFA</td>
+                        <td><span class="status">Payé</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h2>Nouvelle vente</h2>
+
+        <label>Choisir un produit</label>
+        <select id="produit" onchange="calculerTotal()">
+            <option value="">Sélectionner un produit</option>
+            <option value="Robe africaine" data-prix="15000">Robe africaine - 15 000 FCFA</option>
+            <option value="Sac à main" data-prix="20000">Sac à main - 20 000 FCFA</option>
+            <option value="Chaussures" data-prix="25000">Chaussures - 25 000 FCFA</option>
+            <option value="T-shirt" data-prix="10000">T-shirt - 10 000 FCFA</option>
+        </select>
+
+        <label>Nom du client</label>
+        <input id="client" placeholder="Ex : Aminata">
+
+        <label>Quantité</label>
+        <input id="quantite" type="number" min="1" value="1"
+        oninput="calculerTotal()">
+
+        <label>Prix unitaire</label>
+        <input id="prixUnitaire" readonly placeholder="Prix automatique">
+
+        <label>Montant total</label>
+        <input id="total" readonly placeholder="0 FCFA">
+
+        <label>Mode de paiement</label>
+        <select id="paiement">
+            <option>Wave</option>
+            <option>Orange Money</option>
+            <option>MTN Money</option>
+            <option>Espèces</option>
+        </select>
+
+        <label>Statut du paiement</label>
+        <select id="statut">
+            <option value="Payé">Payé</option>
+            <option value="En attente">En attente</option>
+            <option value="Partiel">Paiement partiel</option>
+        </select>
+
+        <button class="btn" onclick="ajouterVente()">
+            Enregistrer la vente
+        </button>
+
+        <button class="btn"
+        onclick="fermerModal()"
+        style="background:#777;margin-top:8px">
+            Annuler
+        </button>
+    </div>
+</div>
+
+<script>
+let chiffreAffaires = 85000;
+let nombreVentes = 12;
+
+function ouvrirModal() {
+    document.getElementById("modal").style.display = "flex";
+}
+
+function fermerModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+function calculerTotal() {
+
+    const produit = document.getElementById("produit");
+    const option = produit.options[produit.selectedIndex];
+
+    const prix = Number(option.dataset.prix || 0);
+    const quantite = Number(document.getElementById("quantite").value);
+
+    const total = prix * quantite;
+
+    document.getElementById("prixUnitaire").value =
+        prix.toLocaleString("fr-FR") + " FCFA";
+
+    document.getElementById("total").value =
+        total.toLocaleString("fr-FR") + " FCFA";
+}
+
+function ajouterVente() {
+
+    const produit = document.getElementById("produit").value;
+    const client = document.getElementById("client").value.trim();
+    const quantite = Number(document.getElementById("quantite").value);
+    const prix = Number(
+        document.getElementById("produit")
+        .selectedOptions[0].dataset.prix || 0
+    );
+
+    const paiement = document.getElementById("paiement").value;
+    const statut = document.getElementById("statut").value;
+
+    const montant = prix * quantite;
+
+    if (!produit || !client || quantite < 1 || !Number.isInteger(quantite) || montant <= 0) {
+        alert("Veuillez remplir correctement tous les champs.");
+        return;
+    }
+
+    const ligne = document.createElement("tr");
+
+    const valeurs = [
+        produit + " x" + quantite,
+        client,
+        montant.toLocaleString("fr-FR") + " FCFA",
+        statut
+    ];
+
+    valeurs.forEach((valeur, index) => {
+        const cellule = document.createElement("td");
+        cellule.textContent = valeur;
+
+        if (index === 3) {
+            const badge = document.createElement("span");
+            badge.className = "status";
+            badge.textContent = statut;
+            cellule.textContent = "";
+            cellule.appendChild(badge);
+        }
+
+        ligne.appendChild(cellule);
+    });
+
+    document.getElementById("listeVentes").prepend(ligne);
+
+    if (statut === "Payé") {
+        chiffreAffaires += montant;
+    }
+
+    nombreVentes++;
+
+    document.getElementById("ca").textContent =
+        chiffreAffaires.toLocaleString("fr-FR") + " FCFA";
+
+    document.getElementById("nombre").textContent = nombreVentes;
+
+    fermerModal();
+
+    document.getElementById("produit").value = "";
+    document.getElementById("client").value = "";
+    document.getElementById("quantite").value = 1;
+    document.getElementById("prixUnitaire").value = "";
+    document.getElementById("total").value = "";
+
+    alert("Vente enregistrée avec succès !");
+}
+</script>
+
+</body>
+</html>
